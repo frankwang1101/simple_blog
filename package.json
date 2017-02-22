@@ -1,0 +1,22 @@
+{
+  "name": "simple_blog",
+  "version": "1.0.0",
+  "description": "a simple blog use mongoDB + express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankwang1101/simple_blog.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "frankW",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frankwang1101/simple_blog/issues"
+  },
+  "homepage": "https://github.com/frankwang1101/simple_blog#readme"
+}
