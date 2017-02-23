@@ -42,7 +42,7 @@ router.post('/',checkNoLogin,(req,res,next) => {
         req.flash('error',e.message);;
         return res.redirect('/signup');
         next(e);
-    }        ;
+    }     
     password = sha1(password);
     let user = {
         name: name,
