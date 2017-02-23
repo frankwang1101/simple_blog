@@ -3,6 +3,8 @@ const router = express.Router()
 import {checkLogin} from '../middlewares/check'
 // GET /logout method
 router.get('/',checkLogin,(req,res,next) => {
-    res.send(req.flash());
+    req.session.user = null;
+    req.flash('success','登出成功');
+    res.redirect('/posts');
 })
 module.exports = router;

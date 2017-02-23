@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<style>
+		.wrap{
+			padding: 0;
+			margin: 0 auto;
+
+		}
+		h1{
+			text-align: center;
+		}
+		.page-header p{
+			text-align: center;
+			color: #aaa;
+		}
+		.btn-group{
+			position: absolute;
+			right: 200px;
+			top: 10px;
+		}
+		.post-content{
+			border-radius: 6px;
+			border:1px solid #999;
+		}
+		.post-content{
+			padding: 20px;
+		}
+		.user-name{
+			color: #59c72b;
+			font-size: 25px;
+			padding: 10px 0;
+			font-weight: bold;
+		}
+	</style>
+	<script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>home</h1>
+			<p>my first blog area</p>
+		</div>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="glyphicon glyphicon-align-justify"></span></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="#">首页</a></li>
+		    <li><a href="#">个人</a></li>
+		    <!-- <li><a href="#">登出</a></li> -->
+		    <li role="separator" class="divider"></li>
+		    <li><a href="#">登出</a></li>
+		  </ul>
+		</div>
+		<div class="notification alert alert-success">
+			just alert..
+		</div>
+		<div class="post-content">
+			<div class="user-name">Hello....</div>
+			<div class="user-content">
+				<p>a:hover {</p>
+				<p>  border-bottom: 3px solid #4fc08d;</p>
+				<p>}</p>
+
+				<p>.button {</p>
+				<p>  background-color: #4fc08d !important;</p>
+				<p>  color: #fff !important;</p>
+				<p>}</p>
+
+				<p>.avatar {</p>
+				<p>  border-radius: 3px;</p>
+				<p>  width: 48px;</p>
+				<p>  height: 48px;</p>
+				<p>  float: right;</p>
+				<p>}</p>
+			</div>
+			<div class="user-bottom">
+				<div class="date pull-left">2017-02-23</div>
+				<div class="operate pull-right">浏览(0) 留言(0)</div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

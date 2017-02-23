@@ -4,7 +4,7 @@ import {checkLogin} from '../middlewares/check'
 //common post list or specific post list
 // GET /posts or /post?author=xxx
 router.get('/',(req,res,next) => {
-    res.send(req.flash())
+    res.render('posts')
 })
 //post a post methid POST /posts
 router.post('/',checkLogin,(req,res,next) => {
