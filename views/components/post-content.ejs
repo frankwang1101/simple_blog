@@ -1,0 +1,19 @@
+<div class="post-content" style="margin-top:25px;">
+    <div class="user-name"><a href="/posts/<%=post._id%>"><%=post.title%></a></div>
+    <div class="user-content">
+        <%- post.content%>
+    </div>
+    <div class="user-bottom">
+        <div class="date pull-left">2017-02-23</div>
+        <div class="operate pull-right">浏览(<%=post.pv%>) 留言(0)</div>
+        <% if(user && post.author._id && user._id.toString() === post.author._id.toString() ){%>
+        <div class="btn-operate pull-right">
+            <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">操作</span>
+            <ul class="dropdown-menu">
+                <li><a href="/posts/<%=post._id%>/edit">编辑</a></li>
+                <li><a href="/posts/<%=post._id%>/remove">删除</a></li>
+            </ul>
+        </div>
+       <%}%>
+    </div>
+</div>
