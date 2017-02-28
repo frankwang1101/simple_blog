@@ -1,0 +1,38 @@
+<div class="comment-content">
+    <% comments.forEach(function(comment){%>
+        <div class="comment-row">
+            <img src="/img/<%=comment.author.avatar%>" alt="<%=comment.author.name%>"  style="width:50px;height: 50px;" class="comment-avatar">
+            <div class="content-info">
+                <div class="title-area">
+                    <span class="author"><a href="/posts?author=<%=comment.author._id%>" style="color:inherit"><%=comment.author.name%></a></span>
+                    <span class="date"><%=comment.create_at%></span>
+                </div>
+                <div class="content-area">
+                    <%- comment.content %>
+                </div>
+                <% if(user && comment.author._id && comment.author._id.toString() === user._id.toString()){%>
+                    <div class="pull-right">
+                        <a href="">编辑</a>
+                        <a href="">删除</a>
+                    </div>
+                <%}%>
+            </div>
+        </div>
+    <%})%>
+    <% if(user){ %>
+        <div class="reply-area">
+            <form action="/post/postid/comment" class="form-horizontal" method="post">
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <textarea rows="10" class="form-control" name="reply"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary pull-right">Reply</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <%}%>
+</div>

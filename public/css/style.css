@@ -1,0 +1,62 @@
+.wrap{
+    padding: 0;
+    margin: 0 auto;
+
+}
+h1{
+    text-align: center;
+}
+.page-header p{
+    text-align: center;
+    color: #aaa;
+}
+.btn-group{
+    position: absolute;
+    right: 200px;
+    top: 10px;
+}
+.post-content{
+    border-radius: 6px;
+    border:1px solid #ccc;
+}
+.post-content{
+    padding: 20px;
+}
+.user-name{
+    color: #59c72b;
+    font-size: 25px;
+    padding: 10px 0;
+    font-weight: bold;
+}
+.comment-content{
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border:1px solid #ccc;
+}
+.comment-row{
+    position: relative;
+}
+.comment-row .comment-avatar{
+    position: absolute;
+}
+.comment-row .content-info{
+    min-height: 50px;
+    margin-left: 60px;
+}
+.comment-row .content-info:after{
+    clear: both;
+    display: block;
+    visibility: hidden;
+    content: '';
+}
+.comment-row .content-info .author{
+    font-weight: bold;
+    font-size: 18px;
+}
+.comment-row .content-info .date{
+    font-weight: 100;
+    font-size: 12px;
+    color: #ccc;
+    margin-left: 10px;
+}

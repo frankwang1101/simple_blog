@@ -1,5 +1,6 @@
 import express from 'express'
 import PostModel from '../model/post'
+import CommentModel from '../model/comment'
 
 const router = express.Router();
 import {checkLogin} from '../middlewares/check'
@@ -50,19 +51,62 @@ router.get('/create',checkLogin,(req,res,next) => {
 })
 //post detail page GET /posts/:postId
 router.get('/:postId',(req,res,next) => {
-    res.send(req.flash())
+    const postId = req.params.postId;
+    Promise.all([
+        PostModel.getPostById(postId),
+        CommentModel.delCommentByPostId(postId),
+        PostModel.incPv(postId)
+    ])
+    .then(result => {
+        let post = result[0],
+            comments = result[1]
+        if(!post){
+            throw new Error('该文章不存在')
+        }
+        res.render('post',{
+            post:post,
+            comments:comments
+        });
+    })
+    .catch(next)
 })
 //edit post page GET /post/:postId/edit
 router.get('/:postId/edit',(res,req,next) => {
-    res.send(req.flash())
+    const postId = req.params.postId,
+        author = req.session.user._id;
+    PostModel.getRawPostById(postId)
+        .then(post => {
+            if(!post){
+                throw new Error('该文章不存在')
+            }
+            if(author.toString() !== post.author._id.toString()){
+                throw new Error('权限不足')
+            }
+            res.render('edit',{post:post});
+        })
+        .catch(next)
 })
 //update post method POST /post/:postId/edit
 router.post('/:postId/edit',(res,req,next) => {
-    res.send(req.flash())
+    let content = req.fields.content,
+        title = req.fields.title,
+        postId = req.params.postId,
+        author = req.session.user._id;
+    PostModel.updatePostById(postId,author,{title:title,content:content})
+        .then(() => {
+            req.flash('success','更新成功')
+        })
+        .catch(next)
 })
 //delete post method GET /post/:postId/edit
 router.get('/:postId/remove',(res,req,next) => {
-    res.send(req.flash())
+    const postId = req.params.postId,
+        author = req.session.user._id;
+    PostModel.delPostById(postId)
+        .then(() => {
+            req.flash('success','删除成功')
+        })
+        .catch(next)
 })
 //create a comment POST /posts/:postId/comment
 router.post('/:postId/comment',(res,req,next) => {

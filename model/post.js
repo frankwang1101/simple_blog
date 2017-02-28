@@ -1,5 +1,6 @@
 import {Post} from '../lib/mongo'
 import marked from 'marked'
+import CommentModel from './comment'
 
 Post.plugin('contentToHtml',{
     afterFind: posts => {
@@ -16,6 +17,26 @@ Post.plugin('contentToHtml',{
     }
 })
 
+Post.plugin('addCommentsCount',{
+    afterFind: posts => {
+        return posts.map(p => {
+            return CommentModel.getCommentsCount(p._id).then(count => {
+                post.commentsCount = count;
+                return post;
+            })
+        })
+    },
+    afterFindOne: post => {
+        if(post){
+            return CommentModel.getCommentsCount(post._id).then(count => {
+                post.commentsCount = count
+                return post;
+            })
+        }
+        return post;
+    }
+})
+
 module.exports = {
     create: (post) => {
         return Post.create(post).exec();
@@ -25,6 +46,7 @@ module.exports = {
             .findOne({_id: id})
             .populate({path:'author',model:'User'})
             .addCreateAt()
+            .addCommentsCount()
             .contentToHtml()
             .exec();
     },
@@ -38,6 +60,7 @@ module.exports = {
             .populate({path:'author',model:'User'})
             .sort({_id:-1})
             .addCreateAt()
+            .addCommentsCount()
             .contentToHtml()
             .exec()
     },
@@ -56,6 +79,10 @@ module.exports = {
         return Post.update({author:author,_id:postId},{$set:data}).exec();
     },
     delPostById: function delPostById(postId, author) {
-        return Post.remove({ author: author, _id: postId }).exec();
+        return Post.remove({ author: author, _id: postId }).exec().then(res => {
+            if(res.result.ok && res.result.n > 0){
+                return CommentModel.delCommentByPostId(postId);
+            }
+        });
     }
 }
