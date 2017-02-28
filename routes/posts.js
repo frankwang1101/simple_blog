@@ -110,10 +110,29 @@ router.get('/:postId/remove',(res,req,next) => {
 })
 //create a comment POST /posts/:postId/comment
 router.post('/:postId/comment',(res,req,next) => {
-    res.send(req.flash())
+    let content = req.fields.reply,
+        postId = req.params.postId,
+        author = req.session.user._id;
+    let comment = {
+        author: author,
+        postId: postId,
+        content: content
+    }
+    CommentModel.create(comment)
+        .then(() => {
+            req.flash('success','留言成功')
+            res.redirect('back')
+        })
+        .catch(next)
 })
 //delete a comment POST /posts/:postId/comment/:commentId/remove
 router.post('/:postId/comment/:commentId/remove',(res,req,next) => {
-    res.send(req.flash())
+    const author = req.session.user._id,
+        commentId = req.params.commentId;
+    CommentModel.delCommentById(commentId)
+        .then(() => {
+            req.flash('success','删除成功')
+        })
+        .catch(next)
 })
 module.exports = router;
