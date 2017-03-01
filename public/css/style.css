@@ -18,11 +18,33 @@ h1{
 .post-content{
     border-radius: 6px;
     border:1px solid #ccc;
-}
-.post-content{
     padding: 20px;
+    position: relative;
 }
-.user-name{
+.post-content .user-bottom:after{
+    content:'';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.post-content .author-info{
+    position: absolute;
+    left: -70px;
+    padding: 9px;
+    width: 70px;
+    border: 1px solid  #ddd;
+    border-right-color: #fff;
+    height: 120px;
+    border-radius: 5px 0 0 5px;
+}
+.post-content .author-info .info-words span{
+    width: 100%;
+    display: block;
+    text-align: center;
+    height: 25px;
+    line-height: 25px;
+}
+.post-content .user-name{
     color: #59c72b;
     font-size: 25px;
     padding: 10px 0;
@@ -59,4 +81,11 @@ h1{
     font-size: 12px;
     color: #ccc;
     margin-left: 10px;
+}
+.comment-row a{
+    color: inherit;
+    text-decoration: none;
+}
+.comment-row a:hover{
+    text-decoration: underline;
 }

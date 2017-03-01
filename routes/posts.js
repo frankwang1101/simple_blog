@@ -10,7 +10,6 @@ router.get('/',(req,res,next) => {
     let author = req.query.author
     PostModel.getPosts(author)
         .then(result => {
-            console.log(result)
             res.render('posts',{posts:result});
         })
         .catch(next)
@@ -54,7 +53,7 @@ router.get('/:postId',(req,res,next) => {
     const postId = req.params.postId;
     Promise.all([
         PostModel.getPostById(postId),
-        CommentModel.delCommentByPostId(postId),
+        CommentModel.getComments(postId),
         PostModel.incPv(postId)
     ])
     .then(result => {
@@ -71,7 +70,7 @@ router.get('/:postId',(req,res,next) => {
     .catch(next)
 })
 //edit post page GET /post/:postId/edit
-router.get('/:postId/edit',(res,req,next) => {
+router.get('/:postId/edit',(req,res,next) => {
     const postId = req.params.postId,
         author = req.session.user._id;
     PostModel.getRawPostById(postId)
@@ -87,7 +86,7 @@ router.get('/:postId/edit',(res,req,next) => {
         .catch(next)
 })
 //update post method POST /post/:postId/edit
-router.post('/:postId/edit',(res,req,next) => {
+router.post('/:postId/edit',(req,res,next) => {
     let content = req.fields.content,
         title = req.fields.title,
         postId = req.params.postId,
@@ -99,7 +98,7 @@ router.post('/:postId/edit',(res,req,next) => {
         .catch(next)
 })
 //delete post method GET /post/:postId/edit
-router.get('/:postId/remove',(res,req,next) => {
+router.get('/:postId/remove',(req,res,next) => {
     const postId = req.params.postId,
         author = req.session.user._id;
     PostModel.delPostById(postId)
@@ -109,8 +108,8 @@ router.get('/:postId/remove',(res,req,next) => {
         .catch(next)
 })
 //create a comment POST /posts/:postId/comment
-router.post('/:postId/comment',(res,req,next) => {
-    let content = req.fields.reply,
+router.post('/:postId/comment',(req,res,next) => {
+    let content = req.fields.content,
         postId = req.params.postId,
         author = req.session.user._id;
     let comment = {
@@ -126,7 +125,7 @@ router.post('/:postId/comment',(res,req,next) => {
         .catch(next)
 })
 //delete a comment POST /posts/:postId/comment/:commentId/remove
-router.post('/:postId/comment/:commentId/remove',(res,req,next) => {
+router.post('/:postId/comment/:commentId/remove',(req,res,next) => {
     const author = req.session.user._id,
         commentId = req.params.commentId;
     CommentModel.delCommentById(commentId)

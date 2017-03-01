@@ -5,6 +5,7 @@ import CommentModel from './comment'
 Post.plugin('contentToHtml',{
     afterFind: posts => {
         return posts.map(p => {
+            // console.log(p.content)
             p.content = marked(p.content)
             return p
         })
@@ -20,10 +21,10 @@ Post.plugin('contentToHtml',{
 Post.plugin('addCommentsCount',{
     afterFind: posts => {
         return posts.map(p => {
-            return CommentModel.getCommentsCount(p._id).then(count => {
-                post.commentsCount = count;
-                return post;
+            CommentModel.getCommentsCount(p._id).then(count => {
+                p.commentsCount = count;
             })
+            return p;
         })
     },
     afterFindOne: post => {
@@ -56,7 +57,7 @@ module.exports = {
             query.author = author;
         }
         return Post
-            .find(query)
+            .find({})
             .populate({path:'author',model:'User'})
             .sort({_id:-1})
             .addCreateAt()
