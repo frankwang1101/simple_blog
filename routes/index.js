@@ -10,4 +10,9 @@ module.exports = app => {
     app.use('/login',login)
     app.use('/logout',logout)
     app.use('/signup',signup)
+    app.use((req,res) => {
+        if(!res.headerSent){
+            res.status(404).render('404')
+        }
+    })
 }

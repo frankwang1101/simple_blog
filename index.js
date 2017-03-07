@@ -5,6 +5,8 @@ import connectMongo from 'connect-mongo'
 import flash from 'connect-flash'
 import path from 'path'
 import config from 'config-lite'
+import winston from 'winston'
+import expressWinston from 'express-winston'
 
 // import ejs from 'ejs'
 
@@ -48,8 +50,35 @@ app.use((req,res,next)=>{
     res.locals.error = req.flash('error').toString();
     next();
 })
+app.use(expressWinston.logger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'logs/success.log'
+        })
+    ]
+}))
 //router
 routes(app);
+
+app.use(expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'logs/success.log'
+        })
+
+    ]
+}))
+app.use((err,req,res,next) => {
+    res.render('error',{error:err})
+})
 app.listen(config.port,() => {
     console.log(`${pkg.name} listening on port ${config.port}`);
 })
